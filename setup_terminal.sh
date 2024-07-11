@@ -10,18 +10,29 @@ install_dependencies() {
     fi
 }
 
+# Function to create hacker_startup.sh script
+create_startup_script() {
+    local startup_script=~/hacker_startup.sh
+
+    cat <<EOL > $startup_script
+#!/bin/bash
+
 # Function to display a hacker-style welcome message
 display_hacker_message() {
     echo -e "\e[32m"
     echo "####################################"
     echo "#                                  #"
-    echo -e "#       Welcome, \e[31m$1\e[32m!           #"
+    echo -e "#       Welcome, \e[31m\$1\e[32m!           #"
     echo "#                                  #"
     echo "####################################"
     echo -e "\e[0m"
 
-    # Play the welcome voice MP3 file
-    termux-media-player play ~/welcomevoice.mp3 &> /dev/null
+    # Play the welcome voice MP3 file if it exists
+    if [ -f ~/welcomevoice.mp3 ]; then
+        termux-media-player play ~/welcomevoice.mp3 &> /dev/null
+    else
+        echo "Welcome voice file (welcomevoice.mp3) not found."
+    fi
 
     # Simulate hacker-style output
     echo -e "\e[33m"
@@ -39,55 +50,20 @@ display_hacker_message() {
 echo "Enter your name:"
 read name
 
+# Execute the display_hacker_message function
+display_hacker_message "\$name"
+EOL
+
+    chmod +x $startup_script
+
+    echo "Setup complete! The startup script is located at $startup_script."
+}
+
+# Main setup process
+echo "Setting up hacker-themed Termux environment..."
+
 # Install necessary packages
 install_dependencies
 
 # Create the startup script
-startup_script=~/hacker_startup.sh
-cat <<EOL > $startup_script
-#!/bin/bash
-
-# Function to display a hacker-style welcome message
-display_hacker_message() {
-    echo -e "\e[32m"
-    echo "####################################"
-    echo "#                                  #"
-    echo -e "#       Welcome, \e[31m\$1\e[32m!           #"
-    echo "#                                  #"
-    echo "####################################"
-    echo -e "\e[0m"
-
-    # Play the welcome voice MP3 file
-    termux-media-player play ~/welcomevoice.mp3 &> /dev/null
-
-    # Simulate hacker-style output
-    echo -e "\e[33m"
-    echo "Initializing system..."
-    sleep 1
-    echo "Loading modules..."
-    sleep 1
-    echo "Connecting to the network..."
-    sleep 1
-    echo "Ready."
-    echo -e "\e[0m"
-}
-
-clear
-display_hacker_message "$name"
-EOL
-
-chmod +x $startup_script
-
-# Add the startup script to .bashrc if it doesn't already exist
-if ! grep -q "~/hacker_startup.sh" ~/.bashrc; then
-    echo "~/hacker_startup.sh" >> ~/.bashrc
-fi
-
-# Source the .bashrc to make changes take effect immediately
-source ~/.bashrc
-
-# Run the startup script to show changes immediately
-bash ~/hacker_startup.sh
-
-# Inform the user
-echo "Setup complete! Your terminal has been updated."
+create_startup_script
