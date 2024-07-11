@@ -1,17 +1,27 @@
 #!/bin/bash
 
+# Function to install necessary packages
+install_dependencies() {
+    # Check if termux-api is installed
+    if ! command -v termux-media-player &> /dev/null; then
+        echo "termux-api not found. Installing..."
+        pkg update
+        pkg install termux-api -y
+    fi
+}
+
 # Function to display a hacker-style welcome message
 display_hacker_message() {
     echo -e "\e[32m"
     echo "####################################"
     echo "#                                  #"
-    echo "#       Welcome, $1!               #"
+    echo -e "#       Welcome, \e[31m$1\e[32m!           #"
     echo "#                                  #"
     echo "####################################"
     echo -e "\e[0m"
 
-    # Voice announcement
-    espeak "Welcome $1. Terminal is ready."
+    # Play the welcome voice MP3 file
+    termux-media-player play ~/welcomevoice.mp3 &> /dev/null
 
     # Simulate hacker-style output
     echo -e "\e[33m"
@@ -29,40 +39,55 @@ display_hacker_message() {
 echo "Enter your name:"
 read name
 
+# Install necessary packages
+install_dependencies
+
 # Create the startup script
 startup_script=~/hacker_startup.sh
-echo "#!/bin/bash" > $startup_script
-echo "clear" >> $startup_script
-echo "display_hacker_message '$name'" >> $startup_script
-chmod +x $startup_script
+cat <<EOL > $startup_script
+#!/bin/bash
 
-# Add function to .bashrc if it doesn't already exist
-if ! grep -q "function display_hacker_message()" ~/.bashrc; then
-    echo "function display_hacker_message() {" >> ~/.bashrc
-    echo "    echo -e \"\\e[32m\"" >> ~/.bashrc
-    echo "    echo \"####################################\"" >> ~/.bashrc
-    echo "    echo \"#                                  #\"" >> ~/.bashrc
-    echo "    echo \"#       Welcome, \$1!               #\"" >> ~/.bashrc
-    echo "    echo \"#                                  #\"" >> ~/.bashrc
-    echo "    echo \"####################################\"" >> ~/.bashrc
-    echo "    echo -e \"\\e[0m\"" >> ~/.bashrc
-    echo "    espeak \"Welcome \$1. Terminal is ready.\"" >> ~/.bashrc
-    echo "    echo -e \"\\e[33m\"" >> ~/.bashrc
-    echo "    echo \"Initializing system...\"" >> ~/.bashrc
-    echo "    sleep 1" >> ~/.bashrc
-    echo "    echo \"Loading modules...\"" >> ~/.bashrc
-    echo "    sleep 1" >> ~/.bashrc
-    echo "    echo \"Connecting to the network...\"" >> ~/.bashrc
-    echo "    sleep 1" >> ~/.bashrc
-    echo "    echo \"Ready.\"" >> ~/.bashrc
-    echo "    echo -e \"\\e[0m\"" >> ~/.bashrc
-    echo "}" >> ~/.bashrc
-fi
+# Function to display a hacker-style welcome message
+display_hacker_message() {
+    echo -e "\e[32m"
+    echo "####################################"
+    echo "#                                  #"
+    echo -e "#       Welcome, \e[31m\$1\e[32m!           #"
+    echo "#                                  #"
+    echo "####################################"
+    echo -e "\e[0m"
+
+    # Play the welcome voice MP3 file
+    termux-media-player play ~/welcomevoice.mp3 &> /dev/null
+
+    # Simulate hacker-style output
+    echo -e "\e[33m"
+    echo "Initializing system..."
+    sleep 1
+    echo "Loading modules..."
+    sleep 1
+    echo "Connecting to the network..."
+    sleep 1
+    echo "Ready."
+    echo -e "\e[0m"
+}
+
+clear
+display_hacker_message "$name"
+EOL
+
+chmod +x $startup_script
 
 # Add the startup script to .bashrc if it doesn't already exist
 if ! grep -q "~/hacker_startup.sh" ~/.bashrc; then
     echo "~/hacker_startup.sh" >> ~/.bashrc
 fi
 
+# Source the .bashrc to make changes take effect immediately
+source ~/.bashrc
+
+# Run the startup script to show changes immediately
+bash ~/hacker_startup.sh
+
 # Inform the user
-echo "Setup complete! Please restart your terminal to see the changes."
+echo "Setup complete! Your terminal has been updated."
