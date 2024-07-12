@@ -57,10 +57,10 @@ This script will give your Termux terminal a hacker-themed look and feel with th
 - Feel free to modify the ASCII art, aliases, and functions to suit your preferences.
 ```
 
-
 # Repository Information
 
-- **Name:** [Asif Nazir]
-- **Developed by:** thisizasif
-- **Developed in:** 12-july-2024
-- **Version:** 1.0.0
+## Name: Asif Nazir
+## Developed by: thisizasif
+## Developed in: 12-July-2024
+## Version: 1.0.0
+
