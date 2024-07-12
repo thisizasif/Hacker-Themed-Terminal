@@ -1,69 +1,49 @@
 #!/bin/bash
 
-# Function to install necessary packages
-install_dependencies() {
-    # Check if termux-api is installed
-    if ! command -v termux-media-player &> /dev/null; then
-        echo "termux-api not found. Installing..."
-        pkg update
-        pkg install termux-api -y
-    fi
+# Backup existing .bashrc
+cp ~/.bashrc ~/.bashrc.bak
+
+# Clear existing content of .bashrc and add custom hacker theme
+cat << 'EOF' > ~/.bashrc
+
+# Disable the default Termux welcome message
+export TERMUX_PKG_DISABLE_GAMES=1
+
+# Custom hacker-themed prompt
+PS1="\[\e[32m\]Hacker-Ashu\[\e[m\] \[\e[36m\]\w\[\e[m\] > "
+
+# Hacker-style welcome message
+clear
+echo -e "\e[32m"
+echo "  _    _               _____   _  __  ______   _____  "
+echo " | |  | |     /\      / ____| | |/ / |  ____| |  __ \ "
+echo " | |__| |    /  \    | |      | ' /  | |__    | |__) |"
+echo " |  __  |   / /\ \   | |      |  <   |  __|   |  _  / "
+echo " | |  | |  / ____ \  | |____  | . \  | |____  | | \ \ "
+echo " |_|  |_| /_/    \_\  \_____| |_|\_\ |______| |_|  \_\\"
+echo "                                                      "
+echo "                                                      "
+echo -e "\e[m"
+echo -e "\e[32mWelcome, Hacker-Ashu! Ready to conquer the digital world?\e[m"
+echo ""
+
+# Aliases to enhance terminal experience
+alias ll='ls -la --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls --color=auto'
+alias cls='clear'
+
+# Functions for a hacker vibe
+function hacktools() {
+    echo -e "\e[32m[+] Available hacking tools:\e[0m"
+    echo -e "\e[32m[+] nmap\e[0m - Network exploration tool and security scanner"
+    echo -e "\e[32m[+] hydra\e[0m - Password cracking tool"
+    echo -e "\e[32m[+] metasploit\e[0m - Penetration testing framework"
 }
 
-# Function to create hacker_startup.sh script
-create_startup_script() {
-    local startup_script=~/hacker_startup.sh
+EOF
 
-    cat <<EOL > $startup_script
-#!/bin/bash
+# Source the .bashrc to apply changes
+source ~/.bashrc
 
-# Function to display a hacker-style welcome message
-display_hacker_message() {
-    echo -e "\e[32m"
-    echo "####################################"
-    echo "#                                  #"
-    echo -e "#       Welcome, \e[31m\$1\e[32m!           #"
-    echo "#                                  #"
-    echo "####################################"
-    echo -e "\e[0m"
-
-    # Play the welcome voice MP3 file if it exists
-    if [ -f ~/welcomevoice.mp3 ]; then
-        termux-media-player play ~/welcomevoice.mp3 &> /dev/null
-    else
-        echo "Welcome voice file (welcomevoice.mp3) not found."
-    fi
-
-    # Simulate hacker-style output
-    echo -e "\e[33m"
-    echo "Initializing system..."
-    sleep 1
-    echo "Loading modules..."
-    sleep 1
-    echo "Connecting to the network..."
-    sleep 1
-    echo "Ready."
-    echo -e "\e[0m"
-}
-
-# Ask the user for their name
-echo "Enter your name:"
-read name
-
-# Execute the display_hacker_message function
-display_hacker_message "\$name"
-EOL
-
-    chmod +x $startup_script
-
-    echo "Setup complete! The startup script is located at $startup_script."
-}
-
-# Main setup process
-echo "Setting up hacker-themed Termux environment..."
-
-# Install necessary packages
-install_dependencies
-
-# Create the startup script
-create_startup_script
+echo "Hacker-themed terminal applied. Please restart Termux or run 'source ~/.bashrc' to see the changes."
