@@ -10,11 +10,12 @@ Clone this repository to your local machine:
 ```sh
 git clone https://github.com/thisizasif/hacker-themed-terminal.git
 ...
-...sh
+
+```sh
 
 ### optional 
 cd hacker-themed-terminal
-...
+```
 
 
 ### 2. Customize Your Name
