@@ -9,8 +9,13 @@ This script customizes your terminal to have a hacker-themed look and feel. It c
 Clone this repository to your local machine:
 ```sh
 git clone https://github.com/thisizasif/hacker-themed-terminal.git
+...
+...sh
+
+### optional 
 cd hacker-themed-terminal
-```
+...
+
 
 ### 2. Customize Your Name
 Open the `hacker_theme.sh` file in a text editor:
