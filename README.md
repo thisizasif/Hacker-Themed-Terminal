@@ -11,9 +11,8 @@ Clone this repository to your local machine:
 git clone https://github.com/thisizasif/hacker-themed-terminal.git
 ```
 
-```sh
-
 ### optional 
+```sh
 cd hacker-themed-terminal
 ```
 
