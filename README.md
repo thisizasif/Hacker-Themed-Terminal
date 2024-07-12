@@ -1,4 +1,3 @@
-
 # Hacker-Themed Terminal Setup
 
 This script customizes your terminal to have a hacker-themed look and feel. It changes the prompt, adds a hacker-style welcome message, and includes useful aliases and functions.
@@ -57,3 +56,11 @@ This script will give your Termux terminal a hacker-themed look and feel with th
 - This script is designed for Bash. If you're using a different shell like Zsh, modify the script accordingly.
 - Feel free to modify the ASCII art, aliases, and functions to suit your preferences.
 ```
+
+
+# Repository Information
+
+- **Name:** [Asif Nazir]
+- **Developed by:** thisizasif
+- **Developed in:** 12-july-2024
+- **Version:** 1.0.0
